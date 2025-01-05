@@ -7,11 +7,11 @@ ACCOUNTS_FILE = "accounts.txt"
 TRANSACTIONS_FILE = "transactions.txt"
 
 def encrypt_password(password):
-    """Encrypt the password using SHA-256."""
+    #Encrypt the password using SHA-256.
     return hashlib.sha256(password.encode()).hexdigest()
 
 def load_accounts():
-    """Load account details from the file."""
+    #Load account details from the file.
     accounts = {}
     if os.path.exists(ACCOUNTS_FILE):
         with open(ACCOUNTS_FILE, "r") as file:
@@ -27,23 +27,23 @@ def load_accounts():
     return accounts
 
 def save_account(account_number, name, password, balance, locked=False, lock_time=""):
-    """Save a new account to the file."""
+    #Save a new account to the file.
     with open(ACCOUNTS_FILE, "a") as file:
         file.write(f"{account_number},{name},{password},{balance},{locked},{lock_time}\n")
 
 def update_accounts_file(accounts):
-    """Update the accounts file with the current state."""
+    #Update the accounts file with the current state.
     with open(ACCOUNTS_FILE, "w") as file:
         for acc_num, details in accounts.items():
             file.write(f"{acc_num},{details['name']},{details['password']},{details['balance']},{details['locked']},{details['lock_time']}\n")
 
 def log_transaction(account_number, transaction_type, amount, balance):
-    """Log a transaction to the file."""
+    #Log a transaction to the file.
     with open(TRANSACTIONS_FILE, "a") as file:
         file.write(f"{account_number},{transaction_type},{amount},{balance},{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 def create_account(accounts):
-    """Create a new account."""
+    #Create a new account.
     name = input("Enter your name: ")
     initial_deposit = float(input("Enter your initial deposit: "))
     password = encrypt_password(input("Enter a password: "))
@@ -59,7 +59,7 @@ def create_account(accounts):
     print(f"Account created successfully! Your account number is: {account_number}")
 
 def is_account_locked(account, account_number):
-    """Check if an account is locked and unlock it after 5 minutes."""
+    #Check if an account is locked and unlock it after 5 minutes.
     if account["locked"]:
         if account["lock_time"]:
             lock_time = datetime.strptime(account["lock_time"], '%Y-%m-%d %H:%M:%S')
@@ -80,7 +80,7 @@ def is_account_locked(account, account_number):
 
 
 def login(accounts):
-    """Login to an account."""
+    #Login to an account.
     account_number = input("Enter your account number: ")
 
     if account_number in accounts:
@@ -111,7 +111,7 @@ def login(accounts):
 
 
 def deposit(accounts, account_number):
-    """Deposit money into the account."""
+    #Deposit money into the account.
     amount = float(input("Enter amount to deposit: "))
     accounts[account_number]["balance"] += amount
     log_transaction(account_number, "Deposit", amount, accounts[account_number]["balance"])
@@ -119,7 +119,7 @@ def deposit(accounts, account_number):
     update_accounts_file(accounts)
 
 def withdraw(accounts, account_number):
-    """Withdraw money from the account."""
+    #Withdraw money from the account.
     amount = float(input("Enter amount to withdraw: "))
     if accounts[account_number]["balance"] >= amount:
         accounts[account_number]["balance"] -= amount
@@ -130,7 +130,7 @@ def withdraw(accounts, account_number):
         print("Insufficient balance!")
 
 def check_balance(accounts, account_number):
-    """Check the account balance."""
+    #Check the account balance.
     balance = accounts[account_number]["balance"]
     print(f"Your current balance is: {balance}")
 

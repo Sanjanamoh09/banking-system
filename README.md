@@ -13,7 +13,7 @@ A console-based Banking System for managing accounts, performing transactions, a
 1. **Password Retry and Account Locking**
    - Users have 3 attempts to log in.
    - Accounts are locked after 3 failed attempts.
-   - Locked accounts cannot log in until manually unlocked.
+   - Locked accounts can log in again after 5 minutes (time can be changed).
 
 2. **Balance Inquiry**
    - Users can check their current balance after logging in.
